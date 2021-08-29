@@ -149,6 +149,52 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testCancelSearchAfterSuccessfulSearch()
+    {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_container"),
+                "Java",
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
+                "Cannot find any topic searching by 'Java'",
+                15
+        );
+
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Island of Indonesia']"),
+                "Cannot find several topics searching by 'Java'"
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot find X to cancel search",
+                5
+        );
+
+        waitForElementNotPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
+                "There is some results after cancel search",
+                5
+        );
+
+        waitForElementNotPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Island of Indonesia']"),
+                "There is some results after cancel search",
+                5
+        );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds)
     {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
