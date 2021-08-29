@@ -133,6 +133,22 @@ public class FirstTest {
         );
     }
 
+    @Test
+    public void testCompareSearchBarText()
+    {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        assertElementHasText(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Search…",
+                "Element doesn't contain text 'Search…'"
+        );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds)
     {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
@@ -175,6 +191,20 @@ public class FirstTest {
     {
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.clear();
+        return element;
+    }
+
+    private WebElement assertElementHasText(By by, String expected_text, String error_message)
+    {
+        WebElement element = waitForElementPresent(by, error_message);
+
+        String element_text = element.getAttribute("text");
+
+        Assert.assertEquals(
+                error_message,
+                expected_text,
+                element_text
+        );
         return element;
     }
 }
