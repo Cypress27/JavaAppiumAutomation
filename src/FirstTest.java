@@ -710,6 +710,35 @@ public class FirstTest {
 
     }
 
+    @Test
+    public void testAssertTitleInTheArticle()
+    {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        String value_for_search = "Java";
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_container"),
+                value_for_search,
+                "Cannot find search input",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+                5
+        );
+
+        assertElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "cannot find article title"
+        );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds)
     {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
@@ -857,6 +886,17 @@ public class FirstTest {
     {
         WebElement element = waitForElementPresent(by, error_message, timeout_in_seconds);
         return element.getAttribute(attribute);
+    }
+
+    public void assertElementPresent(By by, String error_message)
+    {
+        int amount_of_elements = getAmountOfElements(by);
+        if (amount_of_elements > 0) {
+        }
+        else {
+            String default_message = "There is no element '" + by.toString() + "' in the article";
+            throw new AssertionError(default_message + ": " + error_message);
+        }
     }
 
 }
