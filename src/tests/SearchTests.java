@@ -57,4 +57,21 @@ public class SearchTests extends CoreTestCase
         SearchPageObject.assertThereIsNoResultOfSearch();
 
     }
+
+    @Test
+    public void testCompareSearchBarText()
+    {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+
+        String search_bar_text = SearchPageObject.getSearchBarText();
+
+        assertEquals(
+                "Search bar doesn't contain text 'Search…'",
+                "Search…",
+                search_bar_text
+        );
+
+    }
 }

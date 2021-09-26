@@ -15,22 +15,6 @@ public class FirstTest extends CoreTestCase {
     }
 
     @Test
-    public void testCompareSearchBarText()
-    {
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Cannot find 'Search Wikipedia' input",
-                5
-        );
-
-        MainPageObject.assertElementHasText(
-                By.id("org.wikipedia:id/search_src_text"),
-                "Search…",
-                "Element doesn't contain text 'Search…'"
-        );
-    }
-
-    @Test
     public void testCancelSearchAfterSuccessfulSearch()
     {
         MainPageObject.waitForElementAndClick(

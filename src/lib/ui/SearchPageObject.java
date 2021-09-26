@@ -2,6 +2,7 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class SearchPageObject extends MainPageObject{
 
@@ -34,6 +35,17 @@ public class SearchPageObject extends MainPageObject{
     public void waitForCancelButtonToAppear()
     {
         this.waitForElementPresent((By.id(SEARCH_CANCEL_BUTTON)),"Cannot find search cancel button", 5);
+    }
+
+    public WebElement waitForSearchBarTextToAppear()
+    {
+        return this.waitForElementPresent(By.xpath(SEARCH_INPUT),"Cannot find search bar text", 5);
+    }
+
+    public String getSearchBarText()
+    {
+        WebElement search_bar = waitForSearchBarTextToAppear();
+        return search_bar.getAttribute("text");
     }
 
     public void waitForCancelButtonToDisappear()
