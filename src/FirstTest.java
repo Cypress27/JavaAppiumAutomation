@@ -15,35 +15,6 @@ public class FirstTest extends CoreTestCase {
     }
 
     @Test
-    public void testEachSearchResultContainsSearchKey() {
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Cannot find 'Search Wikipedia' input",
-                5
-        );
-
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_container"),
-                "Java",
-                "Cannot find search input",
-                5
-        );
-
-        MainPageObject.waitForElementPresent(
-                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
-                "Cannot find any topic searching by 'Java'",
-                15
-        );
-
-        MainPageObject.assertEachSameElementContainsText(
-                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']"),
-                "Java",
-                "There is a title, which doesn't contain 'Java'"
-        );
-
-    }
-
-    @Test
     public void testSaveTwoArticlesToMyList()
     {
         MainPageObject.waitForElementAndClick(

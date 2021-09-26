@@ -92,4 +92,17 @@ public class SearchTests extends CoreTestCase
         SearchPageObject.waitForSearchResultToDisappear("Island of Indonesia");
 
     }
+
+    @Test
+    public void testEachSearchResultContainsSearchKey()
+    {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        String search_text = "Java";
+        SearchPageObject.typeSearchLine(search_text);
+        SearchPageObject.waitForSearchResult("Object-oriented programming language");
+        SearchPageObject.assertEachSearchResultContainsSubstring(search_text);
+
+    }
 }
