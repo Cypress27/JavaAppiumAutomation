@@ -74,4 +74,22 @@ public class SearchTests extends CoreTestCase
         );
 
     }
+
+    @Test
+    public void testCancelSearchAfterSuccessfulSearch()
+    {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.waitForSearchResult("Object-oriented programming language");
+        SearchPageObject.waitForSearchResult("Island of Indonesia");
+
+        SearchPageObject.waitForCancelButtonToAppear();
+        SearchPageObject.clickCancelSearch();
+
+        SearchPageObject.waitForSearchResultToDisappear("Object-oriented programming language");
+        SearchPageObject.waitForSearchResultToDisappear("Island of Indonesia");
+
+    }
 }

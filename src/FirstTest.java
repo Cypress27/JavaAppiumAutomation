@@ -15,52 +15,6 @@ public class FirstTest extends CoreTestCase {
     }
 
     @Test
-    public void testCancelSearchAfterSuccessfulSearch()
-    {
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Cannot find 'Search Wikipedia' input",
-                5
-        );
-
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_container"),
-                "Java",
-                "Cannot find search input",
-                5
-        );
-
-        MainPageObject.waitForElementPresent(
-                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
-                "Cannot find any topic searching by 'Java'",
-                15
-        );
-
-        MainPageObject.waitForElementPresent(
-                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Island of Indonesia']"),
-                "Cannot find several topics searching by 'Java'"
-        );
-
-        MainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/search_close_btn"),
-                "Cannot find X to cancel search",
-                5
-        );
-
-        MainPageObject.waitForElementNotPresent(
-                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
-                "There is some results after cancel search",
-                5
-        );
-
-        MainPageObject.waitForElementNotPresent(
-                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Island of Indonesia']"),
-                "There is some results after cancel search",
-                5
-        );
-    }
-
-    @Test
     public void testEachSearchResultContainsSearchKey() {
         MainPageObject.waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
