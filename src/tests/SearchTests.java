@@ -105,4 +105,17 @@ public class SearchTests extends CoreTestCase
         SearchPageObject.assertEachSearchResultContainsSubstring(search_text);
 
     }
+
+    @Test
+    public void testEachSearchResultContainsTitleAndSubtitle()
+    {
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+
+        SearchPageObject.initSearchInput();
+        String search_text = "Java";
+        SearchPageObject.typeSearchLine(search_text);
+        SearchPageObject.waitForElementByTitleAndDescription("Java", "Island of Indonesia");
+        SearchPageObject.waitForElementByTitleAndDescription("JavaScript", "Programming language");
+        SearchPageObject.waitForElementByTitleAndDescription("Java (programming language)", "Object-oriented programming language");
+    }
 }

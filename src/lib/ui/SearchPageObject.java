@@ -13,7 +13,9 @@ public class SearchPageObject extends MainPageObject{
         SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='{SUBSTRING}']",
         SEARCH_RESULT_ELEMENT = "//*[@resource-id='org.wikipedia:id/search_results_list']/*[@resource-id='org.wikipedia:id/page_list_item_container']",
         SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results found']",
-        SEARCH_RESULT_TITLE = "//*[@resource-id='org.wikipedia:id/page_list_item_title']";
+        SEARCH_RESULT_TITLE = "//*[@resource-id='org.wikipedia:id/page_list_item_title']",
+        SEARCH_RESULT_BY_TITLE_AND_SUBTITLE_SUBSTRINGS_TPL = "//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='{SUBSTRING_TITLE}']/following-sibling::*[@text='{SUBSTRING_SUBTITLE}']";
+
 
     public SearchPageObject(AppiumDriver driver)
     {
@@ -24,6 +26,13 @@ public class SearchPageObject extends MainPageObject{
     private static String getResultSearchElement(String substring)
     {
         return SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
+    }
+
+    private static String getResultSearchElementByTitleAndSubtitleText(String substring_title, String substring_subtitle)
+    {
+        return SEARCH_RESULT_BY_TITLE_AND_SUBTITLE_SUBSTRINGS_TPL
+                .replace("{SUBSTRING_TITLE}", substring_title)
+                .replace("{SUBSTRING_SUBTITLE}", substring_subtitle);
     }
      /* TEMPLATE METHODS */
 
@@ -109,6 +118,16 @@ public class SearchPageObject extends MainPageObject{
                 By.xpath(SEARCH_RESULT_TITLE),
                 substring,
                 "There is a title, which doesn't contain " + substring
+        );
+    }
+
+    public void waitForElementByTitleAndDescription(String title, String subtitle)
+    {
+        String search_result_xpath = getResultSearchElementByTitleAndSubtitleText(title, subtitle);
+        this.waitForElementPresent(
+                By.xpath(search_result_xpath),
+                "Cannot find search result with title '" + title +"' and subtitle '" + subtitle + "'",
+                15
         );
     }
 }
