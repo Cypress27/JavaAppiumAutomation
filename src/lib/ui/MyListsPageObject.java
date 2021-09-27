@@ -70,4 +70,14 @@ public class MyListsPageObject extends MainPageObject{
 
         this.waitForArticleToDisappearByTitle(article_title);
     }
+
+    public void openArticleFromMyListByTitle(String article_title)
+    {
+        String saved_article_title = getSavedArticleXpathByTitle(article_title);
+        this.waitForElementAndClick(
+                By.xpath(saved_article_title),
+                "Cannot find second article after deleting the first article",
+                5
+        );
+    }
 }

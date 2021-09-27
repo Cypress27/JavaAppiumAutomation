@@ -14,11 +14,17 @@ public class ArticlePageObject extends MainPageObject
         ADD_TO_MY_LIST_OVERLAY = "org.wikipedia:id/onboarding_button",
         MY_LIST_NAME_INPUT = "org.wikipedia:id/text_input",
         MY_LIST_OK_BUTTON = "//*[@text='OK']",
-        CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']";
+        CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']",
+        MY_LIST_FOLDER_NAME_TPL = "//*[@text='{SUBSTRING}']";
 
     public ArticlePageObject(AppiumDriver driver)
     {
         super(driver);
+    }
+
+    private static String getMyListFolderElement(String substring)
+    {
+        return MY_LIST_FOLDER_NAME_TPL.replace("{SUBSTRING}", substring);
     }
 
     public WebElement waitForTitleElement()
@@ -73,7 +79,6 @@ public class ArticlePageObject extends MainPageObject
                 5
         );
 
-
         this.waitForElementAndSendKeys(
                 By.id(MY_LIST_NAME_INPUT),
                 name_of_folder,
@@ -84,6 +89,34 @@ public class ArticlePageObject extends MainPageObject
         this.waitForElementAndClick(
                 By.xpath(MY_LIST_OK_BUTTON),
                 "Cannot press OK button",
+                5
+        );
+    }
+
+    public void addNextArticleToMyList(String name_of_folder)
+    {
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_BUTTON),
+                "Cannot find button to open article options",
+                10
+        );
+
+        this.waitForElementPresent(
+                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                "Cannot find option to add article to reading list",
+                10
+        );
+
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                "Cannot find option to add article to reading list",
+                10
+        );
+
+        String my_list_folder_xpath = getMyListFolderElement(name_of_folder);
+        this.waitForElementAndClick(
+                By.xpath(my_list_folder_xpath),
+                "Cannot find '" + name_of_folder + "' list",
                 5
         );
     }
