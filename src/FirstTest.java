@@ -194,33 +194,4 @@ public class FirstTest extends CoreTestCase {
 
     }
 
-    @Test
-    public void testAssertTitleInTheArticle()
-    {
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-                "Cannot find 'Search Wikipedia' input",
-                5
-        );
-
-        String value_for_search = "Java";
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_container"),
-                value_for_search,
-                "Cannot find search input",
-                5
-        );
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
-                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
-                5
-        );
-
-        MainPageObject.assertElementPresent(
-                By.id("org.wikipedia:id/view_page_title_text"),
-                "cannot find article title"
-        );
-    }
-
 }
